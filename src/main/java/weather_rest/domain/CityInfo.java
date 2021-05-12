@@ -84,7 +84,6 @@ public class CityInfo {
                 this.country = country;
         }
 
-
         @Override
         public boolean equals(Object obj) {
                 if (this == obj)
