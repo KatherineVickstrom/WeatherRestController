@@ -1,128 +1,107 @@
 package weather_rest.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-@Entity
-@Table(name="city")
 public class CityInfo {
         
-        @Id
-        private int ID;
-        private String name;
-        private String district;
-        private int population;
-        
-        // Transient marks extra field in an Entity class
-        //  that is not read/written to the database.
-        @Transient
-        CityWeather weather;
-        
-        @ManyToOne
-        @JoinColumn(name="countrycode", referencedColumnName="code")
+        private String time, temp;
         private Country country;
+        private City city;
         
         public CityInfo() { }
         
-        public CityInfo(int ID, String name, String district, int population, Country country) {
-                this.ID = ID;
-                this.name = name;
-                this.district = district;
-                this.population = population;
-                this.country = country;
-        }
+        public CityInfo(City city, Country country, TempAndTime tempAndTime) {
+           this.temp = tempAndTime.convertTemp();
+           this.time = tempAndTime.convertTime();
+           this.city = city;
+           this.country = country;
+         }
 
-        public int getID() {
-                return ID;
-        }
+      @Override
+      public int hashCode()
+      {
+         final int prime = 31;
+         int result = 1;
+         result = prime * result + ((city == null) ? 0 : city.hashCode());
+         result = prime * result + ((country == null) ? 0 : country.hashCode());
+         result = prime * result + ((temp == null) ? 0 : temp.hashCode());
+         result = prime * result + ((time == null) ? 0 : time.hashCode());
+         return result;
+      }
 
-        public void setID(int iD) {
-                ID = iD;
-        }
+      @Override
+      public boolean equals(Object obj)
+      {
+         if (this == obj)
+            return true;
+         if (obj == null)
+            return false;
+         if (getClass() != obj.getClass())
+            return false;
+         CityInfo other = (CityInfo) obj;
+         if (city == null)
+         {
+            if (other.city != null)
+               return false;
+         } else if (!city.equals(other.city))
+            return false;
+         if (country == null)
+         {
+            if (other.country != null)
+               return false;
+         } else if (!country.equals(other.country))
+            return false;
+         if (temp == null)
+         {
+            if (other.temp != null)
+               return false;
+         } else if (!temp.equals(other.temp))
+            return false;
+         if (time == null)
+         {
+            if (other.time != null)
+               return false;
+         } else if (!time.equals(other.time))
+            return false;
+         return true;
+      }
 
-        public String getName() {
-                return name;
-        }
+      public String getTime()
+      {
+         return time;
+      }
 
-        public void setName(String name) {
-                this.name = name;
-        }
+      public void setTime(String time)
+      {
+         this.time = time;
+      }
 
-        public String getDistrict() {
-                return district;
-        }
+      public String getTemp()
+      {
+         return temp;
+      }
 
-        public void setDistrict(String district) {
-                this.district = district;
-        }
+      public void setTemp(String temp)
+      {
+         this.temp = temp;
+      }
 
-        public int getPopulation() {
-                return population;
-        }
+      public Country getCountry()
+      {
+         return country;
+      }
 
-        public void setPopulation(int population) {
-                this.population = population;
-        }
+      public void setCountry(Country country)
+      {
+         this.country = country;
+      }
 
-        public CityWeather getWeather() {
-                return weather;
-        }
+      public City getCity()
+      {
+         return city;
+      }
 
-        public void setWeather(CityWeather weather) {
-                this.weather = weather;
-        }
+      public void setCity(City city)
+      {
+         this.city = city;
+      }
 
-        public Country getCountry() {
-                return country;
-        }
-
-        public void setCountry(Country country) {
-                this.country = country;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-                if (this == obj)
-                        return true;
-                if (obj == null)
-                        return false;
-                if (getClass() != obj.getClass())
-                        return false;
-                CityInfo other = (CityInfo) obj;
-                if (ID != other.ID)
-                        return false;
-                if (country == null) {
-                        if (other.country != null)
-                                return false;
-                } else if (!country.equals(other.country))
-                        return false;
-                if (district == null) {
-                        if (other.district != null)
-                                return false;
-                } else if (!district.equals(other.district))
-                        return false;
-                if (name == null) {
-                        if (other.name != null)
-                                return false;
-                } else if (!name.equals(other.name))
-                        return false;
-                if (population != other.population)
-                        return false;
-                if (weather == null) {
-                        if (other.weather != null)
-                                return false;
-                } else if (!weather.equals(other.weather))
-                        return false;
-                return true;
-        }
-
-        @Override
-        public String toString() {
-                return "City [ID=" + ID + ", name=" + name + ", district=" + district + ", population=" + population
-                                + ", weather=" + weather + ", country=" + country + "]";
-        }
 }

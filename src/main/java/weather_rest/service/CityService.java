@@ -1,5 +1,7 @@
 package weather_rest.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,20 @@ public class CityService {
         private WeatherService weatherService;
         
         public CityInfo getCityInfo(String cityName) {
-           //  TODO  your code goes here
-           return null;
+           
+           List<City> cities = cityRepository.findByName(cityName);
+           if (cities.size() == 0) {
+               return null;
+           }
+           
+           else {
+                   
+               // in case of multiple cities, take the first one.
+               City city = cities.get(0);
+               Country country = city.getCountry();
+               TempAndTime tempAndTime = weatherService.getTempAndTime(cityName);
+               CityInfo cityInfo = new CityInfo(city, country, tempAndTime);
+               return cityInfo;
+           }
      }
 }
