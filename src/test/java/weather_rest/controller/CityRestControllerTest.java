@@ -1,6 +1,5 @@
 package weather_rest.controller;
 
-public class CityRestControllerTest
-{
+public class CityRestControllerTest {
 
 }

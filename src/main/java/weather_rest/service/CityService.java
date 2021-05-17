@@ -19,18 +19,17 @@ public class CityService {
         public CityInfo getCityInfo(String cityName) {
            
            List<City> cities = cityRepository.findByName(cityName);
-           if (cities.size() == 0) {
-               return null;
+           if (cities.size() > 0) {
+              // in case of multiple cities, take the first one.
+              City city = cities.get(0);
+              Country country = countryRepository.findByCode(city.getCountryCode());
+              TempAndTime tempAndTime = weatherService.getTempAndTime(cityName);
+              CityInfo cityInfo = new CityInfo(city, country, tempAndTime);
+              return cityInfo;
            }
            
            else {
-                   
-               // in case of multiple cities, take the first one.
-               City city = cities.get(0);
-               Country country = city.getCountry();
-               TempAndTime tempAndTime = weatherService.getTempAndTime(cityName);
-               CityInfo cityInfo = new CityInfo(city, country, tempAndTime);
-               return cityInfo;
+              return null;
            }
      }
 }

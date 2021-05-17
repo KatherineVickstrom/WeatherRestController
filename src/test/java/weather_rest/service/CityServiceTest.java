@@ -1,6 +1,9 @@
 package weather_rest.service;
 
-public class CityServiceTest
-{
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
+public class CityServiceTest {
+       
+   
 }

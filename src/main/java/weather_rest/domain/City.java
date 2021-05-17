@@ -15,6 +15,7 @@ public class City {
   private String name;
   private String district;
   private int population;
+  private String countrycode;
 
   @ManyToOne
   @JoinColumn(name = "countrycode", referencedColumnName = "code")
@@ -22,12 +23,13 @@ public class City {
 
   public City() {}
 
-  public City(int ID, String name, String district, int population, Country country) {
+  public City(int ID, String name, String district, int population, Country country, String countryCode) {
     this.ID = ID;
     this.name = name;
     this.district = district;
     this.population = population;
     this.country = country;
+    this.countrycode = countryCode;
   }
 
   public int getID() {
@@ -70,6 +72,13 @@ public class City {
     this.country = country;
   }
 
+  public String getCountryCode() {
+     return countrycode;
+  }
+  
+  public void setCountryCode(String countryCode) {
+     this.countrycode = countryCode;
+  }
 
   @Override
   public boolean equals(Object obj) {
